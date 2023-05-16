@@ -1,0 +1,44 @@
+<resources>
+    <string name="app_name">SVG Viewer</string>
+    <string name="app_main_text"><font color='#FFFFFF'>SVG</font> \n<font color='#F3D9B1'>Viewer</font> </string>
+
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="rate_us">Rate us</string>
+    <string name="feedback">Feedback</string>
+    <string name="more_apps">More Apps</string>
+    <string name="share">Share</string>
+
+
+    <string name="view_svg_files">View svg files</string>
+    <string name="view_svg_code">View svg code</string>
+    <string name="svg_code">SVG Code</string>
+    <string name="converted">Converted</string>
+    <string name="view_converted_files">View converted files</string>
+    <string name="file_name">File Name</string>
+    <string name="file_size">File Size</string>
+    <string name="text">Text</string>
+    <string name="convert">Convert</string>
+    <string name="converted_files">Converted Files</string>
+    <string name="recent_files">Recent Files</string>
+    <string name="no_data_text">Currently no File available</string>
+    <string name="currently_no_converted_files_available">Currently no converted files available</string>
+    <string name="currently_no_svg_files_available">Currently no SVG files available</string>
+    <string name="currently_no_recent_files_available">Currently no Recent files available</string>
+
+
+    <string name="permissions_string">     All permissions are only for user\'s benefit please allow for proceed further.\n\n
+    <b>Permissions:</b>
+    \n\n1: " "Read Storage permissions.\n
+    \n2: " "Write Storage permissions.\n
+    \n3: " "Manage Storage permissions.\n
+</string>
+    <string name="do_you_want_to_see">Do you want to see?</string>
+    <string name="code">Code</string>
+    <string name="image">Image</string>
+    <string name="convert_to_png">Convert to PNG</string>
+    <string name="convert_to_pdf">Convert to PDF</string>
+    <string name="convert_to_jpg">Convert to JPG</string>
+    <string name="enter_file_name">Enter file Name</string>
+    <string name="delete_from_recent">Delete from recent</string>
+    <string name="search">Search...</string>
+</resources>

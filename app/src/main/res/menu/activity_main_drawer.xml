@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_privacy"
+        android:title="@string/privacy_policy"
+        android:icon="@drawable/ic_privacy"
+        />
+
+    <item
+        android:id="@+id/nav_rate_us"
+        android:title="@string/rate_us"
+        android:icon="@drawable/ic_rateus"
+        />
+
+    <item
+        android:id="@+id/nav_share"
+        android:title="@string/share"
+        android:icon="@drawable/ic_share"
+        />
+
+    <item
+        android:id="@+id/nav_feedback"
+        android:title="@string/feedback"
+        android:icon="@drawable/ic_feedback"
+        />
+
+    <item
+        android:id="@+id/nav_moreapps"
+        android:title="@string/more_apps"
+        android:icon="@drawable/ic_more_app"
+        />
+</menu>
