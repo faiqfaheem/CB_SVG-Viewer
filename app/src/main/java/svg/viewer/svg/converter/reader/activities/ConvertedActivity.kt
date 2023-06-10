@@ -59,7 +59,7 @@ class ConvertedActivity : AppCompatActivity() {
 
         })
 
-        val listfile = this.filesDir.listFiles()
+        val listfile = getExternalFilesDir("temp")!!.listFiles()
         if (listfile!!.isNotEmpty()) {
             for (file in listfile) { //For each of the entries do:
                 if (file.absolutePath.endsWith("pdf") || file.absolutePath.endsWith("png") || file.absolutePath.endsWith("jpg")) {

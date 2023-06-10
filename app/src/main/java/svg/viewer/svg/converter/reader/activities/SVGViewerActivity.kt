@@ -26,7 +26,7 @@ class SVGViewerActivity : AppCompatActivity() {
     private var pathList = ArrayList<String>()
     private val executor: Executor = Executors.newSingleThreadExecutor()
     private val handler = Handler(Looper.getMainLooper())
-    private lateinit var adapter: SVGadapter
+    private  var adapter: SVGadapter? = null
     private val check = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,7 +49,7 @@ class SVGViewerActivity : AppCompatActivity() {
             binding.includeSvg.ivCross.visibility = GONE
             binding.includeSvg.ivSearch.visibility = VISIBLE
             binding.includeSvg.txtToolbar.visibility = VISIBLE
-            adapter.notifyDataSetChanged()
+            adapter?.notifyDataSetChanged()
             val inputMethodManager =
                 getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
             inputMethodManager.hideSoftInputFromWindow(it.windowToken, 0)
@@ -98,9 +98,9 @@ class SVGViewerActivity : AppCompatActivity() {
         }
         if (filterproduct.isEmpty()) {
             val emptyList: java.util.ArrayList<String> = java.util.ArrayList<String>()
-            adapter.filterList(emptyList)
+            adapter?.filterList(emptyList)
         } else {
-            adapter.filterList(filterproduct)
+            adapter?.filterList(filterproduct)
         }
     }
     private fun showKeyboard(mEtSearch: EditText, context: Context) {

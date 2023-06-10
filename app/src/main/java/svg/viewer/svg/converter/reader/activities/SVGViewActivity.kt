@@ -2,9 +2,9 @@ package svg.viewer.svg.converter.reader.activities
 
 import android.app.Dialog
 import android.content.ContentValues.TAG
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Canvas
-import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -13,22 +13,19 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.Window
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import br.tiagohm.codeview.CodeView
 import br.tiagohm.codeview.Language
 import br.tiagohm.codeview.Theme
-import com.caverock.androidsvg.SVG
-import com.caverock.androidsvg.SVGImageView
 import svg.viewer.svg.converter.reader.R
 import svg.viewer.svg.converter.reader.databinding.ActivitySvgviewBinding
 import svg.viewer.svg.converter.reader.roomDB.AppDatabase
 import svg.viewer.svg.converter.reader.roomDB.User
 import svg.viewer.svg.converter.reader.roomDB.UserDao
-import com.itextpdf.text.Document
-import com.itextpdf.text.Image
-import com.itextpdf.text.pdf.PdfWriter
+import svg.viewer.svg.converter.reader.svgviewer.Sharp
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
@@ -41,12 +38,14 @@ import java.util.concurrent.Executors
 class SVGViewActivity : AppCompatActivity() , CodeView.OnHighlightListener {
     private lateinit var binding: ActivitySvgviewBinding
     private var check = 11
+    var pdfImage: ImageView? = null
     private val executor: Executor = Executors.newSingleThreadExecutor()
     private val handler = Handler(Looper.getMainLooper())
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySvgviewBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         val userDao: UserDao = AppDatabase.getAppDatabase(this@SVGViewActivity)!!.getUserDao()
         check = intent.getIntExtra("Image",0)
         val path = intent.getStringExtra("Path")
@@ -61,9 +60,10 @@ class SVGViewActivity : AppCompatActivity() , CodeView.OnHighlightListener {
                 userDao.insertAll(user)
             }
            executor.execute {
-               val uri = Uri.fromFile(File(path))
+               val uri = File(path)
                handler.post {
-                   binding.ivImage.setImageURI(uri)
+                   Sharp.loadFile(uri).into(binding.ivImage)
+//                   binding.ivImage.setImageURI(uri)
                    binding.pb.visibility = GONE
                }
            }
@@ -105,9 +105,9 @@ class SVGViewActivity : AppCompatActivity() , CodeView.OnHighlightListener {
                 btnPdf.setOnClickListener {
                     if(etxtFilename.text.toString().trim().isNotEmpty())
                     {
-                        binding.pb.visibility = VISIBLE
-                            val pdfout = this.filesDir.absolutePath + "/"+ etxtFilename.text.toString() + ".pdf"
-                            convertSvgToPdf(File(path), File(pdfout))
+//                        binding.pb.visibility = VISIBLE
+                            val pdfout = getExternalFilesDir("temp")!!.absolutePath + "/"+ etxtFilename.text.toString() + ".pdf"
+                            convertSvgToPdf(etxtFilename.text.toString().trim())
                                 dialog.dismiss()
                     }
                     else{
@@ -152,14 +152,16 @@ class SVGViewActivity : AppCompatActivity() , CodeView.OnHighlightListener {
         binding.includeBinviewer.ivSearch.visibility = GONE
         binding.includeBinviewer.etxtSearch.visibility = GONE
     }
-    private fun convertImage(svgImageView: SVGImageView, bitmapFormat: Bitmap.CompressFormat, fileName: String, fileExtension: String)
+
+
+    private fun convertImage(svgImageView: ImageView, bitmapFormat: Bitmap.CompressFormat, fileName: String, fileExtension: String)
     {
         val width = svgImageView.width
         val height = svgImageView.height
         val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(bitmap)
         svgImageView.draw(canvas)
-        val directory = this.filesDir
+        val directory = getExternalFilesDir("temp")
         val currentTime: Date = Calendar.getInstance().time
         val file = File(directory,fileName+fileExtension)
         val outputStream = FileOutputStream(file)
@@ -168,28 +170,21 @@ class SVGViewActivity : AppCompatActivity() , CodeView.OnHighlightListener {
         Toast.makeText(this@SVGViewActivity, "Converted Successfully", Toast.LENGTH_SHORT).show()
     }
 
-    private fun convertSvgToPdf(svgFile: File, pdfFile: File) {
-        executor.execute {
-            val svg = SVG.getFromInputStream(svgFile.inputStream())
-            val bitmap = Bitmap.createBitmap(svg.documentWidth.toInt(), svg.documentHeight.toInt(), Bitmap.Config.ARGB_8888)
-            val canvas = Canvas(bitmap)
-            canvas.drawARGB(0, 0, 0, 0)
-            svg.renderToCanvas(canvas)
-            val document = Document()
-            val writer = PdfWriter.getInstance(document, FileOutputStream(pdfFile))
-            document.open()
-            val stream = ByteArrayOutputStream()
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
-            val image = Image.getInstance(stream.toByteArray())
-            document.add(image)
-            handler.post {
-                document.close()
-                Toast.makeText(this@SVGViewActivity, "PDF Converted", Toast.LENGTH_SHORT).show()
-                binding.pb.visibility = GONE
-            }
-        }
+    private fun convertSvgToPdf(fileName:String) {
+
+                binding.ivImage.setDrawingCacheEnabled(true)
+        val bitmap: Bitmap = Bitmap.createBitmap(binding.ivImage.getDrawingCache())
+
+        val stream = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
+        val byteArray = stream.toByteArray()
+
+        startActivity(Intent(this@SVGViewActivity,PdfCreatorExampleActivity::class.java)
+            .putExtra("img",byteArray).putExtra("FileName",fileName))
+
 
     }
+
 
     override fun onStartCodeHighlight() {
         binding.pb.visibility = VISIBLE
@@ -210,6 +205,5 @@ class SVGViewActivity : AppCompatActivity() , CodeView.OnHighlightListener {
     override fun onLineClicked(lineNumber: Int, content: String) {
         Log.d(TAG, "onLineClicked: line: $lineNumber html: $content")
     }
-
 
 }

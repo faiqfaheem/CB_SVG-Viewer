@@ -25,7 +25,8 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener {
 
 
         binding.ivDrawer.setOnClickListener {
-            binding.drawerLayout.openDrawer(GravityCompat.START)
+            startActivity(Intent(this@MainActivity,PdfCreatorExampleActivity::class.java))
+//            binding.drawerLayout.openDrawer(GravityCompat.START)
         }
 
         binding.layoutSvgviewer.setOnClickListener {
