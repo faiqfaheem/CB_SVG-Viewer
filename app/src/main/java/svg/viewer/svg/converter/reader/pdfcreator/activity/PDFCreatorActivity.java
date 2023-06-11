@@ -142,7 +142,7 @@ public abstract class PDFCreatorActivity extends AppCompatActivity implements Vi
 
                 // Clean temp folder
                 final FileManager fileManager = FileManager.getInstance();
-                fileManager.cleanTempFolder(getApplicationContext());
+//                fileManager.cleanTempFolder(getApplicationContext());
 
                 // get height per page
                 final int HEIGHT_ALLOTTED_PER_PAGE = (getResources().getDimensionPixelSize(R.dimen.pdf_height) - (getResources().getDimensionPixelSize(R.dimen.pdf_margin_vertical) * 2));
