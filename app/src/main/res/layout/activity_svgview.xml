@@ -15,18 +15,11 @@
             layout="@layout/layout_design_for_tool_bar"
             android:id="@+id/include_binviewer"
             />
-        <com.jsibbold.zoomage.ZoomageView
-            android:id="@+id/iv_Image"
+        <com.caverock.androidsvg.SVGImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:zoomage_restrictBounds="false"
-            app:zoomage_animateOnReset="true"
-            app:zoomage_autoResetMode="UNDER"
-            app:zoomage_autoCenter="true"
-            app:zoomage_zoomable="true"
-            app:zoomage_translatable="true"
-            app:zoomage_minScale="0"
-            app:zoomage_maxScale="8"
+            android:id="@+id/iv_Image"
+            android:background="#EAEAEA"
             />
         <br.tiagohm.codeview.CodeView
             android:id="@+id/txtv_Code"

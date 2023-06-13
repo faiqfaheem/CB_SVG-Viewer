@@ -5,6 +5,7 @@ import android.content.ContentValues.TAG
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -25,7 +26,6 @@ import svg.viewer.svg.converter.reader.databinding.ActivitySvgviewBinding
 import svg.viewer.svg.converter.reader.roomDB.AppDatabase
 import svg.viewer.svg.converter.reader.roomDB.User
 import svg.viewer.svg.converter.reader.roomDB.UserDao
-import svg.viewer.svg.converter.reader.svgviewer.Sharp
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
@@ -59,14 +59,13 @@ class SVGViewActivity : AppCompatActivity() , CodeView.OnHighlightListener {
                 val user = User(0, path)
                 userDao.insertAll(user)
             }
-           executor.execute {
-               val uri = File(path)
-               handler.post {
-                   Sharp.loadFile(uri).into(binding.ivImage)
-//                   binding.ivImage.setImageURI(uri)
-                   binding.pb.visibility = GONE
-               }
-           }
+            executor.execute {
+                val uri = Uri.fromFile(File(path))
+                handler.post {
+                    binding.ivImage.setImageURI(uri)
+                    binding.pb.visibility = GONE
+                }
+            }
             binding.btnConvert.setOnClickListener {
 //
                 val dialog = Dialog(this, R.style.AppTheme_Dialog)

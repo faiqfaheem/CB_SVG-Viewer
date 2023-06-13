@@ -7,7 +7,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import android.os.Environment
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -71,6 +70,8 @@ class PermissionActivity : AppCompatActivity() {
             if (grantResults.isNotEmpty()) {
                 val locationAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED
                 if (locationAccepted) {
+                    val intent = Intent(this@PermissionActivity, SplashActivity::class.java)
+                    startActivity(intent)
                 } else {
                     if (shouldShowRequestPermissionRationale(Manifest.permission.READ_EXTERNAL_STORAGE)) {
                         showMessageOKCancel { _: DialogInterface?, _: Int ->
@@ -87,24 +88,23 @@ class PermissionActivity : AppCompatActivity() {
                     }
                 }
             }
-            val intent = Intent(this@PermissionActivity, SplashActivity::class.java)
-            startActivity(intent)
+
         } else {
             setContentView(binding.root)
         }
     }
 
-    override fun onPostResume() {
-        super.onPostResume()
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            if (Environment.isExternalStorageManager()) {
-                val intent1 = Intent(this, SplashActivity::class.java)
-                startActivity(intent1)
-            } else {
-                setContentView(binding.root)
-            }
-        }
-    }
+//    override fun onPostResume() {
+//        super.onPostResume()
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+//            if (Environment.isExternalStorageManager()) {
+//                val intent1 = Intent(this, SplashActivity::class.java)
+//                startActivity(intent1)
+//            } else {
+//                setContentView(binding.root)
+//            }
+//        }
+//    }
 
     private fun checkPermission(): Boolean {
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
@@ -131,15 +131,28 @@ class PermissionActivity : AppCompatActivity() {
     }
 
     private fun requestPermission() {
-        ActivityCompat.requestPermissions(
-            this,
-            arrayOf(
-                Manifest.permission.READ_EXTERNAL_STORAGE,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.READ_MEDIA_IMAGES
-            ),
-            BluetoothGattCharacteristic.PERMISSION_READ
-        )
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
+        {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(
+                    Manifest.permission.READ_MEDIA_IMAGES,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                ),
+                BluetoothGattCharacteristic.PERMISSION_READ
+            )
+        }
+        else{
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                ),
+                BluetoothGattCharacteristic.PERMISSION_READ
+            )
+        }
+
     }
 
     private fun showMessageOKCancel(onClickListener: DialogInterface.OnClickListener) {
