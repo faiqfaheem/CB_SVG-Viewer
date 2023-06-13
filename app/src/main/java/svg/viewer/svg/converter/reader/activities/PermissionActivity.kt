@@ -5,11 +5,9 @@ import android.bluetooth.BluetoothGattCharacteristic
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
-import android.provider.Settings
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -22,31 +20,38 @@ class PermissionActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPermissionBinding.inflate(layoutInflater)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            if (Environment.isExternalStorageManager()) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (!checkPermission()) {
+                setContentView(binding.root)
+            } else {
                 val intent = Intent(this@PermissionActivity, SplashActivity::class.java)
                 startActivity(intent)
-            } else {
-                setContentView(binding.root)
             }
+//            if (Environment.isExternalStorageManager()) {
+//                val intent = Intent(this@PermissionActivity, SplashActivity::class.java)
+//                startActivity(intent)
+//            } else {
+//                setContentView(binding.root)
+//            }
         } else {
             if (!checkPermission()) {
                 setContentView(binding.root)
             } else {
                 val intent = Intent(this@PermissionActivity, SplashActivity::class.java)
                 startActivity(intent)
-
-
             }
         }
 
         binding.btnAccept.setOnClickListener {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                if (!Environment.isExternalStorageManager()) {
-                    val intent = Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION)
-                    val uri: Uri = Uri.fromParts("package", packageName, null)
-                    intent.data = uri
-                    startActivityForResult(intent, 2296)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+//                if (!Environment.isExternalStorageManager()) {
+//                    val intent = Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION)
+//                    val uri: Uri = Uri.fromParts("package", packageName, null)
+//                    intent.data = uri
+//                    startActivityForResult(intent, 2296)
+//                }
+                if (!checkPermission()) {
+                    requestPermission()
                 }
             } else {
                 if (!checkPermission()) {
@@ -102,18 +107,27 @@ class PermissionActivity : AppCompatActivity() {
     }
 
     private fun checkPermission(): Boolean {
-        val result = ContextCompat.checkSelfPermission(
-            applicationContext,
-            Manifest.permission.READ_EXTERNAL_STORAGE
-        )
-        val result1 = ContextCompat.checkSelfPermission(
-            applicationContext,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE
-        )
-
-
-        return result == PackageManager.PERMISSION_GRANTED
-                && result1 == PackageManager.PERMISSION_GRANTED
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
+        {
+            val result2 =
+                ContextCompat.checkSelfPermission(
+                    applicationContext,
+                    Manifest.permission.READ_MEDIA_IMAGES
+                )
+            return  result2 == PackageManager.PERMISSION_GRANTED
+        }
+        else {
+            val result = ContextCompat.checkSelfPermission(
+                applicationContext,
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            )
+            val result1 = ContextCompat.checkSelfPermission(
+                applicationContext,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            )
+            return result == PackageManager.PERMISSION_GRANTED
+                    && result1 == PackageManager.PERMISSION_GRANTED
+        }
     }
 
     private fun requestPermission() {
@@ -122,6 +136,7 @@ class PermissionActivity : AppCompatActivity() {
             arrayOf(
                 Manifest.permission.READ_EXTERNAL_STORAGE,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_MEDIA_IMAGES
             ),
             BluetoothGattCharacteristic.PERMISSION_READ
         )
