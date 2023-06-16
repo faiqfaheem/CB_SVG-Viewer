@@ -8,10 +8,6 @@ import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.widget.FrameLayout;
 
-/**
- * Layout that provides pinch-zooming of content. This view should have exactly one child
- * view containing the content.
- */
 public class ZoomLayout extends FrameLayout implements ScaleGestureDetector.OnScaleGestureListener {
 
     private static final String TAG = "ZoomLayout";
@@ -20,14 +16,13 @@ public class ZoomLayout extends FrameLayout implements ScaleGestureDetector.OnSc
     private Mode mode = Mode.NONE;
     private float scale = 1.0f;
     private float lastScaleFactor = 0f;
-    // Where the finger first  touches the screen
     private float startX = 0f;
     private float startY = 0f;
-    // How much to translate the canvas
     private float dx = 0f;
     private float dy = 0f;
     private float prevDx = 0f;
     private float prevDy = 0f;
+
     public ZoomLayout(Context context) {
         super(context);
         init(context);
@@ -143,8 +138,8 @@ public class ZoomLayout extends FrameLayout implements ScaleGestureDetector.OnSc
     private void applyScaleAndTranslation() {
         child().setScaleX(scale);
         child().setScaleY(scale);
-        child().setPivotX(0f);  // default is to pivot at view center
-        child().setPivotY(0f);  // default is to pivot at view center
+        child().setPivotX(0f);
+        child().setPivotY(0f);
         child().setTranslationX(dx);
         child().setTranslationY(dy);
     }
@@ -153,9 +148,5 @@ public class ZoomLayout extends FrameLayout implements ScaleGestureDetector.OnSc
         return getChildAt(0);
     }
 
-    private enum Mode {
-        NONE,
-        DRAG,
-        ZOOM
-    }
+    private enum Mode {NONE, DRAG, ZOOM}
 }

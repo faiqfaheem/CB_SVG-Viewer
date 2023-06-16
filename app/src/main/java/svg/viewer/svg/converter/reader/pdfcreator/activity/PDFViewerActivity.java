@@ -122,22 +122,13 @@ public class PDFViewerActivity extends AppCompatActivity {
     }
 
     private static class ZoomOutPageTransformer implements ViewPager.PageTransformer {
-
         public void transformPage(View view, float position) {
-
             View viewToAnimateUTB = view.findViewById(R.id.textViewPdfViewerPageNumber);
-
             int pageHeight = view.getHeight();
-
-            if (position < -1) { // [-Infinity,-1)
-                // This page is way off-screen to the left.
-                viewToAnimateUTB.setTranslationY(0);
-            } else if (position <= 1) { // [-1,1]
+            if (position < -1) viewToAnimateUTB.setTranslationY(0);
+            else if (position <= 1)
                 viewToAnimateUTB.setTranslationY(Math.abs(pageHeight * -position));
-            } else { // (1,+Infinity]
-                // This page is way off-screen to the right.
-                viewToAnimateUTB.setTranslationY(0);
-            }
+            else viewToAnimateUTB.setTranslationY(0);
         }
     }
 }

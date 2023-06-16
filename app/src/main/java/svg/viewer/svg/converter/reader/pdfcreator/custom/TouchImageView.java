@@ -13,9 +13,7 @@ import android.view.View;
 
 import androidx.appcompat.widget.AppCompatImageView;
 
-// https://gist.githubusercontent.com/myinnos/e14b750be9503a2b2611f5a5a74a9e6c
 public class TouchImageView extends AppCompatImageView implements GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener {
-    // We can be in one of these 3 states
     static final int NONE = 0;
     static final int DRAG = 1;
     static final int ZOOM = 2;
@@ -24,7 +22,6 @@ public class TouchImageView extends AppCompatImageView implements GestureDetecto
     protected float origWidth, origHeight;
     Matrix matrix;
     int mode = NONE;
-    // Remember some things for zooming
     PointF last = new PointF();
     PointF start = new PointF();
     float minScale = 1f;
@@ -224,10 +221,6 @@ public class TouchImageView extends AppCompatImageView implements GestureDetecto
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         viewWidth = MeasureSpec.getSize(widthMeasureSpec);
         viewHeight = MeasureSpec.getSize(heightMeasureSpec);
-
-        //
-        // Rescales image on rotation
-        //
         if (oldMeasuredHeight == viewWidth && oldMeasuredHeight == viewHeight
                 || viewWidth == 0 || viewHeight == 0)
             return;
@@ -235,9 +228,7 @@ public class TouchImageView extends AppCompatImageView implements GestureDetecto
         oldMeasuredWidth = viewWidth;
 
         if (saveScale == 1) {
-            // Fit to screen.
             float scale;
-
             Drawable drawable = getDrawable();
             if (drawable == null || drawable.getIntrinsicWidth() == 0
                     || drawable.getIntrinsicHeight() == 0)
