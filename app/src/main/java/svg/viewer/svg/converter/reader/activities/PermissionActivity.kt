@@ -26,12 +26,6 @@ class PermissionActivity : AppCompatActivity() {
                 val intent = Intent(this@PermissionActivity, SplashActivity::class.java)
                 startActivity(intent)
             }
-//            if (Environment.isExternalStorageManager()) {
-//                val intent = Intent(this@PermissionActivity, SplashActivity::class.java)
-//                startActivity(intent)
-//            } else {
-//                setContentView(binding.root)
-//            }
         } else {
             if (!checkPermission()) {
                 setContentView(binding.root)
@@ -43,12 +37,6 @@ class PermissionActivity : AppCompatActivity() {
 
         binding.btnAccept.setOnClickListener {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-//                if (!Environment.isExternalStorageManager()) {
-//                    val intent = Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION)
-//                    val uri: Uri = Uri.fromParts("package", packageName, null)
-//                    intent.data = uri
-//                    startActivityForResult(intent, 2296)
-//                }
                 if (!checkPermission()) {
                     requestPermission()
                 }
@@ -93,18 +81,6 @@ class PermissionActivity : AppCompatActivity() {
             setContentView(binding.root)
         }
     }
-
-//    override fun onPostResume() {
-//        super.onPostResume()
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-//            if (Environment.isExternalStorageManager()) {
-//                val intent1 = Intent(this, SplashActivity::class.java)
-//                startActivity(intent1)
-//            } else {
-//                setContentView(binding.root)
-//            }
-//        }
-//    }
 
     private fun checkPermission(): Boolean {
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)

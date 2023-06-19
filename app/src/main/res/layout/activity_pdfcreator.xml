@@ -39,7 +39,7 @@
             android:layout_weight="1"
             android:orientation="vertical">
 
-            <svg.viewer.svg.converter.reader.pdfcreator.custom.ZoomLayout
+            <svg.viewer.svg.converter.reader.pdfcreator.ZoomLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
@@ -54,7 +54,7 @@
                     android:paddingRight="20dp"
                     android:paddingBottom="20dp" />
 
-            </svg.viewer.svg.converter.reader.pdfcreator.custom.ZoomLayout>
+            </svg.viewer.svg.converter.reader.pdfcreator.ZoomLayout>
 
             <TextView
                 android:id="@+id/textViewPreviewPDFNotSupported"
@@ -75,6 +75,7 @@
             android:background="@color/colorDivider" />
 
         <LinearLayout
+            android:layout_marginVertical="@dimen/_7sdp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -82,7 +83,7 @@
                 android:id="@+id/buttonPreviousPage"
                 style="@style/Widget.AppCompat.Button.Borderless.Colored"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/_45sdp"
                 android:layout_weight="1"
                 android:contentDescription="@string/text_previous_page"
                 android:src="@drawable/ic_left"
@@ -100,20 +101,12 @@
                 android:id="@+id/buttonNextPage"
                 style="@style/Widget.AppCompat.Button.Borderless.Colored"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/_45sdp"
                 android:layout_weight="1"
                 android:contentDescription="@string/text_next_page"
                 android:src="@drawable/ic_right"
                 android:textColor="@color/red_800" />
         </LinearLayout>
-
-        <Button
-            android:id="@+id/buttonSendEmail"
-            style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/text_next" />
-
     </LinearLayout>
 
     <TextView

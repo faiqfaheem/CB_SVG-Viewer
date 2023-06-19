@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="drawerLayout">
+        <attr name="customBehavior" format="boolean" />
+        <attr name="viewScale" format="float" />
+        <attr name="viewScrimColor" format="color" />
+        <attr name="viewElevation" format="dimension" />
+        <attr name="drawerElevation" format="dimension" />
+        <attr name="cardBackgroundColor" format="reference|color" />
+    </declare-styleable>
+    <declare-styleable name="iv">
+        <attr name="zoomable" format="boolean" />
+        <attr name="translatable" format="boolean" />
+        <attr name="restrictBounds" format="boolean" />
+        <attr name="animateOnReset" format="boolean" />
+        <attr name="doubleTapToZoom" format="boolean" />
+        <attr name="doubleTapToZoomScaleFactor" format="float" />
+        <attr name="autoCenter" format="boolean" />
+        <attr name="minScale" format="float" />
+        <attr name="maxScale" format="float" />
+        <attr name="autoResetMode" format="enum">
+            <enum name="UNDER" value="0" />
+            <enum name="OVER" value="1" />
+            <enum name="ALWAYS" value="2" />
+            <enum name="NEVER" value="3" />
+        </attr>
+    </declare-styleable>
+    <declare-styleable name="cv">
+        <attr name="wrap_line" format="boolean"/>
+        <attr name="font_size" format="integer"/>
+        <attr name="zoom_enable" format="boolean"/>
+        <attr name="show_line_number" format="boolean"/>
+        <attr name="start_line_number" format="integer"/>
+        <attr name="highlight_line_number" format="integer"/>
+    </declare-styleable>
+</resources>

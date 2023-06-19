@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/_250sdp"
+    android:layout_marginHorizontal="@dimen/_15sdp"
+    app:cardCornerRadius="@dimen/_10sdp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/primary"
+        android:gravity="center">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_rate"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_67sdp"
+            android:layout_marginVertical="@dimen/_22sdp"
+            android:src="@drawable/ic_star_back" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txtv_descript"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/iv_rate"
+            android:fontFamily="@font/inter_bold"
+            android:gravity="center"
+            android:layout_centerHorizontal="true"
+            android:text="Rate the app?"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_15sdp" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtv_descript"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="@dimen/_10sdp">
+
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_5sdp"
+                app:cardBackgroundColor="@color/transparent"
+                app:cardCornerRadius="@dimen/_7sdp"
+                app:cardElevation="0dp"
+                app:cardMaxElevation="0dp">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnexit"
+                    android:layout_width="@dimen/_70sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:background="@drawable/round_button"
+                    android:fontFamily="@font/inter_medium"
+                    android:foreground="?selectableItemBackground"
+                    android:text="Cancel"
+                    android:textAllCaps="false"
+                    android:textColor="@color/primary" />
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_7sdp"
+                app:cardBackgroundColor="@color/transparent"
+                app:cardCornerRadius="@dimen/_5sdp"
+                app:cardElevation="0dp"
+                app:cardMaxElevation="0dp">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnrate_us"
+                    android:layout_width="@dimen/_90sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:background="@drawable/round_button"
+                    android:backgroundTint="#162650"
+                    android:fontFamily="@font/inter_medium"
+                    android:foreground="?selectableItemBackground"
+                    android:text="Rate Now"
+                    android:textAllCaps="false"
+                    android:textColor="#FFBE3F" />
+            </androidx.cardview.widget.CardView>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

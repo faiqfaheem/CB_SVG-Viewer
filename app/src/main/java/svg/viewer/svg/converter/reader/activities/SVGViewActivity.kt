@@ -1,20 +1,24 @@
 package svg.viewer.svg.converter.reader.activities
 
-import android.app.Dialog
+import android.app.AlertDialog
 import android.content.ContentValues.TAG
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import android.view.Window
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
@@ -22,10 +26,11 @@ import br.tiagohm.codeview.CodeView
 import br.tiagohm.codeview.Language
 import br.tiagohm.codeview.Theme
 import svg.viewer.svg.converter.reader.R
+import svg.viewer.svg.converter.reader.database.AppDatabase
+import svg.viewer.svg.converter.reader.database.User
+import svg.viewer.svg.converter.reader.database.UserDao
 import svg.viewer.svg.converter.reader.databinding.ActivitySvgviewBinding
-import svg.viewer.svg.converter.reader.roomDB.AppDatabase
-import svg.viewer.svg.converter.reader.roomDB.User
-import svg.viewer.svg.converter.reader.roomDB.UserDao
+import svg.viewer.svg.converter.reader.pdfcreator.PdfCreatorActivity
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
@@ -35,10 +40,9 @@ import java.util.concurrent.Executor
 import java.util.concurrent.Executors
 
 
-class SVGViewActivity : AppCompatActivity() , CodeView.OnHighlightListener {
+class SVGViewActivity : AppCompatActivity(), CodeView.OnHighlightListener {
     private lateinit var binding: ActivitySvgviewBinding
     private var check = 11
-    var pdfImage: ImageView? = null
     private val executor: Executor = Executors.newSingleThreadExecutor()
     private val handler = Handler(Looper.getMainLooper())
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,15 +51,14 @@ class SVGViewActivity : AppCompatActivity() , CodeView.OnHighlightListener {
         setContentView(binding.root)
 
         val userDao: UserDao = AppDatabase.getAppDatabase(this@SVGViewActivity)!!.getUserDao()
-        check = intent.getIntExtra("Image",0)
+        check = intent.getIntExtra("Image", 0)
         val path = intent.getStringExtra("Path")
-        if(check == 0)
-        {
+        if (check == 0) {
             binding.pb.visibility = VISIBLE
-            binding.includeBinviewer.txtToolbar.text = File(path!!).name
+            binding.toolbar.txtToolbar.text = File(path!!).name
             binding.txtvCode.visibility = GONE
             val tempList = userDao.getPathCheck(path)
-            if(tempList.isEmpty()) {
+            if (tempList.isEmpty()) {
                 val user = User(0, path)
                 userDao.insertAll(user)
             }
@@ -67,64 +70,68 @@ class SVGViewActivity : AppCompatActivity() , CodeView.OnHighlightListener {
                 }
             }
             binding.btnConvert.setOnClickListener {
-//
-                val dialog = Dialog(this, R.style.AppTheme_Dialog)
-                dialog.window!!.setBackgroundDrawableResource(android.R.color.transparent)
-                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-                dialog.setCancelable(true)
-                dialog.setContentView(R.layout.row_design_for_convert_dialogue)
-                val btnjpg = dialog.findViewById(R.id.btnconvertJPG) as CardView
-                val btnPng = dialog.findViewById(R.id.btnConvertPNG) as CardView
-                val btnPdf = dialog.findViewById(R.id.btnConvertPDF) as CardView
-                val etxtFilename = dialog.findViewById(R.id.etxtFileName) as EditText
+                val builder = AlertDialog.Builder(this@SVGViewActivity)
+                val view: View = LayoutInflater.from(this@SVGViewActivity).inflate(
+                    R.layout.convert_dialog,
+                    findViewById<LinearLayout>(R.id.dialogContainer)
+                )
+                builder.setView(view)
+                val alertDialog = builder.create()
+                alertDialog.setCancelable(true)
+                val btnjpg: CardView = view.findViewById(R.id.btnconvertJPG)
+                val btnPng: CardView = view.findViewById(R.id.btnConvertPNG)
+                val btnPdf: CardView = view.findViewById(R.id.btnConvertPDF)
+                val etxtFilename: EditText = view.findViewById(R.id.etxtFileName)
                 val fileNameWithoutExtension = path.substringBeforeLast(".")
                 val fileName = fileNameWithoutExtension.substringAfterLast("/")
                 etxtFilename.setText(fileName)
                 btnjpg.setOnClickListener {
-                    if(etxtFilename.text.trim().toString().isNotEmpty())
-                    {
-                            convertImage(binding.ivImage,Bitmap.CompressFormat.JPEG,etxtFilename.text.toString(),".jpg")
-                                dialog.dismiss()
-                    }
-                    else{
+                    if (etxtFilename.text.trim().toString().isNotEmpty()) {
+                        convertImage(
+                            binding.ivImage,
+                            Bitmap.CompressFormat.JPEG,
+                            etxtFilename.text.toString(),
+                            ".jpg"
+                        )
+                        alertDialog.dismiss()
+                    } else {
                         Toast.makeText(this, "Please Enter FileName", Toast.LENGTH_SHORT).show()
                     }
                 }
                 btnPng.setOnClickListener {
-                    if(etxtFilename.text.toString().trim().isNotEmpty())
-                    {
-                            convertImage(binding.ivImage,Bitmap.CompressFormat.PNG,etxtFilename.text.toString(),".png")
-                                dialog.dismiss()
-
-                    }
-                    else{
+                    if (etxtFilename.text.toString().trim().isNotEmpty()) {
+                        convertImage(
+                            binding.ivImage,
+                            Bitmap.CompressFormat.PNG,
+                            etxtFilename.text.toString(),
+                            ".png"
+                        )
+                        alertDialog.dismiss()
+                    } else {
                         Toast.makeText(this, "Please Enter FileName", Toast.LENGTH_SHORT).show()
                     }
                 }
                 btnPdf.setOnClickListener {
-                    if(etxtFilename.text.toString().trim().isNotEmpty())
-                    {
-//                        binding.pb.visibility = VISIBLE
-                            val pdfout = getExternalFilesDir("temp")!!.absolutePath + "/"+ etxtFilename.text.toString() + ".pdf"
-                            convertSvgToPdf(etxtFilename.text.toString().trim())
-                                dialog.dismiss()
-                    }
-                    else{
+                    if (etxtFilename.text.toString().trim().isNotEmpty()) {
+                        getExternalFilesDir("temp")!!.absolutePath + "/" + etxtFilename.text.toString() + ".pdf"
+                        convertSvgToPdf(etxtFilename.text.toString().trim())
+                        alertDialog.dismiss()
+                    } else {
                         Toast.makeText(this, "Please Enter FileName", Toast.LENGTH_SHORT).show()
                     }
                 }
-                dialog.show()
+                alertDialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+                alertDialog.show()
             }
         }
-        if(check == 1)
-        {
+        if (check == 1) {
             binding.pb.visibility = VISIBLE
-            binding.includeBinviewer.txtToolbar.text = File(path!!).name
+            binding.toolbar.txtToolbar.text = File(path!!).name
             binding.ivImage.visibility = GONE
             binding.btnConvert.visibility = GONE
-            val user = User(0,path)
+            val user = User(0, path)
             val tempList = userDao.getPathCheck(path)
-            if(tempList.isEmpty()) {
+            if (tempList.isEmpty()) {
                 userDao.insertAll(user)
             }
             executor.execute {
@@ -145,16 +152,20 @@ class SVGViewActivity : AppCompatActivity() , CodeView.OnHighlightListener {
                 }
             }
         }
-        binding.includeBinviewer.btnBack.setOnClickListener {
+        binding.toolbar.btnBack.setOnClickListener {
             finish()
         }
-        binding.includeBinviewer.ivSearch.visibility = GONE
-        binding.includeBinviewer.etxtSearch.visibility = GONE
+        binding.toolbar.ivSearch.visibility = GONE
+        binding.toolbar.etxtSearch.visibility = GONE
     }
 
 
-    private fun convertImage(svgImageView: ImageView, bitmapFormat: Bitmap.CompressFormat, fileName: String, fileExtension: String)
-    {
+    private fun convertImage(
+        svgImageView: ImageView,
+        bitmapFormat: Bitmap.CompressFormat,
+        fileName: String,
+        fileExtension: String
+    ) {
         val width = svgImageView.width
         val height = svgImageView.height
         val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
@@ -162,24 +173,26 @@ class SVGViewActivity : AppCompatActivity() , CodeView.OnHighlightListener {
         svgImageView.draw(canvas)
         val directory = getExternalFilesDir("temp")
         val currentTime: Date = Calendar.getInstance().time
-        val file = File(directory,fileName+fileExtension)
+        val file = File(directory, fileName + fileExtension)
         val outputStream = FileOutputStream(file)
         bitmap.compress(bitmapFormat, 100, outputStream)
         outputStream.close()
         Toast.makeText(this@SVGViewActivity, "Converted Successfully", Toast.LENGTH_SHORT).show()
     }
 
-    private fun convertSvgToPdf(fileName:String) {
+    private fun convertSvgToPdf(fileName: String) {
 
-                binding.ivImage.setDrawingCacheEnabled(true)
+        binding.ivImage.setDrawingCacheEnabled(true)
         val bitmap: Bitmap = Bitmap.createBitmap(binding.ivImage.getDrawingCache())
 
         val stream = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
         val byteArray = stream.toByteArray()
 
-        startActivity(Intent(this@SVGViewActivity,PdfCreatorExampleActivity::class.java)
-            .putExtra("img",byteArray).putExtra("FileName",fileName))
+        startActivity(
+            Intent(this@SVGViewActivity, PdfCreatorActivity::class.java)
+                .putExtra("img", byteArray).putExtra("FileName", fileName)
+        )
 
 
     }
@@ -204,5 +217,4 @@ class SVGViewActivity : AppCompatActivity() , CodeView.OnHighlightListener {
     override fun onLineClicked(lineNumber: Int, content: String) {
         Log.d(TAG, "onLineClicked: line: $lineNumber html: $content")
     }
-
 }

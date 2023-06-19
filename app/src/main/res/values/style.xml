@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    <style name="AppTheme.Dialog" parent="@style/Theme.AppCompat.DayNight">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
     <style name="imagestyle">
         <item name="android:layout_width">@dimen/_60sdp</item>
         <item name="android:layout_height">@dimen/_60sdp</item>
@@ -22,13 +25,6 @@
         <item name="android:layout_height">wrap_content</item>
     </style>
 
-
-
-    <style name="AppTheme.Dialog" parent="ThemeOverlay.AppCompat.Dialog.Alert">
-        <item name="windowMinWidthMajor">60%</item>
-        <item name="windowMinWidthMinor">60%</item>
-    </style>
-
     <style name="AppTheme" parent="android:Theme.Light">
         <item name="android:popupMenuStyle">@style/PopupMenu</item>
     </style>
@@ -37,5 +33,27 @@
         <item name="android:popupBackground">@android:color/white</item>
     </style>
 
+    <style name="viewStyle" parent="Theme.AppCompat.DayNight.Dialog">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:layout_margin">@dimen/_10sdp</item>
+        <item name="android:alpha">0.2</item>
+        <item name="android:background">@color/black</item>
+    </style>
 
+    <style name="lStyle" parent="Theme.AppCompat.DayNight.Dialog">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">@dimen/_10sdp</item>
+        <item name="android:textSize">@dimen/_12ssp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="lStyle.text" parent="Theme.AppCompat.DayNight.Dialog">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColorLink">@color/primary</item>
+        <item name="android:autoLink">web</item>
+        <item name="android:layout_margin">@dimen/_7sdp</item>
+    </style>
 </resources>

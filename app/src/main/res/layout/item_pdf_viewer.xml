@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <svg.viewer.svg.converter.reader.pdfcreator.custom.TouchImageViewFling
+    <svg.viewer.svg.converter.reader.pdfcreator.utils.TouchImageViewFling
         android:id="@+id/imageViewItemPdfViewer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

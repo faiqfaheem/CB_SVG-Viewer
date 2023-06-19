@@ -2,7 +2,6 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
-
 }
 
 android {
@@ -13,9 +12,10 @@ android {
         applicationId "svg.viewer.svg.converter.reader"
         minSdk 21
         targetSdk 33
-        versionCode 1
-        versionName "1.0"
+        versionCode 3
+        versionName "1.0.3"
 
+        setProperty("archivesBaseName", "Svg Viewer - $versionName-$versionCode")
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     viewBinding{
@@ -40,12 +40,9 @@ android {
             force("androidx.core:core-ktx:1.10.1")
         }
     }
-
 }
 
-
 dependencies {
-
     implementation 'androidx.core:core-ktx:1.10.1'
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.9.0'
@@ -53,28 +50,15 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
-    //for sdp
-    implementation 'com.intuit.sdp:sdp-android:1.1.0'
-    //for Navigation drawer
-    implementation 'com.infideap.drawerbehavior:drawer-behavior:1.0.4'
+
+    implementation 'com.intuit.sdp:sdp-android:1.1.0' // sdp
+    implementation 'com.intuit.ssp:ssp-android:1.1.0'   // ssp
+    implementation 'com.caverock:androidsvg-aar:1.4'    // Svg Viewer
+    implementation 'com.github.tiagohm:CodeView:0.4.0'  // Codeview
+
     //for room db
     implementation "androidx.room:room-runtime:2.5.1"
     kapt "androidx.room:room-compiler:2.5.1"
     implementation "androidx.room:room-ktx:2.5.1"
     androidTestImplementation "androidx.room:room-testing:2.5.1"
-    //for Image zoom
-    implementation 'com.jsibbold:zoomage:1.3.1'
-    //for SVG Viewer
-    implementation 'com.caverock:androidsvg-aar:1.4'
-
-
-
-
-//    implementation 'com.itextpdf:itextpdf:5.5.13.2'
-//    implementation 'com.github.tejpratap46:PDFCreatorAndroid:3.0.2'
-
-    //for code view
-    implementation 'com.github.tiagohm:CodeView:0.4.0'
-
-
 }

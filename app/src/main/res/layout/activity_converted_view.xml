@@ -10,17 +10,17 @@
         layout="@layout/layout_design_for_tool_bar"
         android:id="@+id/include_view"
         />
-    <com.jsibbold.zoomage.ZoomageView
+    <svg.viewer.svg.converter.reader.zoom.ZoomImageView
         android:id="@+id/myZoomageView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:zoomage_restrictBounds="false"
-        app:zoomage_animateOnReset="true"
-        app:zoomage_autoResetMode="UNDER"
-        app:zoomage_autoCenter="true"
-        app:zoomage_zoomable="true"
-        app:zoomage_translatable="true"
-        app:zoomage_minScale="0.6"
-        app:zoomage_maxScale="8"
+        app:restrictBounds="false"
+        app:animateOnReset="true"
+        app:autoResetMode="UNDER"
+        app:autoCenter="true"
+        app:zoomable="true"
+        app:translatable="true"
+        app:minScale="0.6"
+        app:maxScale="8"
         />
 </androidx.appcompat.widget.LinearLayoutCompat>

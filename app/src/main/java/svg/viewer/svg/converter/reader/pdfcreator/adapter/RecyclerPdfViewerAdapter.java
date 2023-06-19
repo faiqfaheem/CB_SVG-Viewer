@@ -14,7 +14,7 @@ import java.util.LinkedList;
 import java.util.Locale;
 
 import svg.viewer.svg.converter.reader.R;
-import svg.viewer.svg.converter.reader.pdfcreator.custom.TouchImageView;
+import svg.viewer.svg.converter.reader.pdfcreator.utils.TouchImageView;
 
 public class RecyclerPdfViewerAdapter extends RecyclerView.Adapter<RecyclerPdfViewerAdapter.ViewHolderPdfPage> {
     private static final String TAG = "RecyclerPdfViewerAdapte";

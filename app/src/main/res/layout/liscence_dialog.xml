@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/_7sdp"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/lStyle"
+            android:text="@string/l_svg" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/lStyle.text"
+            android:text="@string/apache" />
+
+        <View style="@style/viewStyle" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/lStyle"
+            android:text="@string/l_codeview" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/lStyle.text"
+            android:text="@string/mit" />
+
+        <View style="@style/viewStyle" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/lStyle"
+            android:text="@string/l_intuit" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/lStyle.text"
+            android:text="@string/mit" />
+
+        <View style="@style/viewStyle" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</ScrollView>

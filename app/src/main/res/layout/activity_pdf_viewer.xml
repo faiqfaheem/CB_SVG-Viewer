@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <svg.viewer.svg.converter.reader.pdfcreator.custom.ViewPagerForPhotoView
+    <svg.viewer.svg.converter.reader.pdfcreator.adapter.ViewPagerForPhotoView
         android:id="@+id/viewPagerPdfViewer"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

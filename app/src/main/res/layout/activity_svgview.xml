@@ -1,94 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rl_layout"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="bin.viewer.reader.bin.file.opener.app.activities.BinViewerActivity"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        tools:context="bin.viewer.reader.bin.file.opener.app.activities.BinViewerActivity">
+
         <include
-            layout="@layout/layout_design_for_tool_bar"
-            android:id="@+id/include_binviewer"
-            />
+            android:id="@+id/toolbar"
+            layout="@layout/layout_design_for_tool_bar" />
+
         <com.caverock.androidsvg.SVGImageView
+            android:id="@+id/iv_Image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/iv_Image"
-            android:background="#EAEAEA"
-            />
+            android:background="#EAEAEA" />
+
         <br.tiagohm.codeview.CodeView
             android:id="@+id/txtv_Code"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:cv_font_size="14"
-            app:cv_highlight_line_number="36"
-            app:cv_show_line_number="true"
-            app:cv_start_line_number="0"
-            app:cv_wrap_line="true"
-            app:cv_zoom_enable="true">
-        </br.tiagohm.codeview.CodeView>
+            app:font_size="14"
+            app:highlight_line_number="36"
+            app:show_line_number="true"
+            app:start_line_number="0"
+            app:wrap_line="true"
+            app:zoom_enable="true"/>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
+
     <androidx.cardview.widget.CardView
+        android:id="@+id/btnConvert"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/_40sdp"
-        app:cardBackgroundColor="@color/primary"
         android:layout_alignParentBottom="true"
-        app:cardCornerRadius="@dimen/_20sdp"
         android:layout_centerHorizontal="true"
-        android:id="@+id/btnConvert"
         android:layout_marginBottom="@dimen/_15sdp"
         android:foreground="?selectableItemBackground"
-        >
+        app:cardBackgroundColor="@color/primary"
+        app:cardCornerRadius="@dimen/_20sdp">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
-            android:padding="@dimen/_5sdp"
-            >
+            android:padding="@dimen/_5sdp">
+
             <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="@dimen/_23sdp"
                 android:layout_height="@dimen/_23sdp"
-                android:layout_marginStart="@dimen/_10sdp"
                 android:layout_gravity="center_vertical"
-                android:src="@drawable/ic_convert_back"/>
+                android:layout_marginStart="@dimen/_10sdp"
+                android:src="@drawable/ic_convert_back" />
+
             <androidx.cardview.widget.CardView
                 android:layout_width="@dimen/_90sdp"
                 android:layout_height="@dimen/_30sdp"
-                app:cardCornerRadius="@dimen/_20sdp"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="@dimen/_7sdp"
                 android:textColor="@color/primary"
                 app:cardBackgroundColor="@color/white"
-                >
+                app:cardCornerRadius="@dimen/_20sdp">
+
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:gravity="center"
-                    >
+                    android:gravity="center">
+
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/convert"
-                        android:textSize="@dimen/_11sdp"
-                        android:textColor="@color/primary"
                         android:fontFamily="@font/inter_medium"
-                        />
+                        android:text="@string/convert"
+                        android:textColor="@color/primary"
+                        android:textSize="@dimen/_11sdp" />
                 </androidx.appcompat.widget.LinearLayoutCompat>
             </androidx.cardview.widget.CardView>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
+
     <ProgressBar
+        android:id="@+id/pb"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:indeterminateTint="@color/primary"
-        android:id="@+id/pb"
-        android:visibility="gone"
-        />
+        android:visibility="gone" />
 </RelativeLayout>

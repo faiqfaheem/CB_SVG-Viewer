@@ -14,9 +14,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import svg.viewer.svg.converter.reader.R
 import svg.viewer.svg.converter.reader.adapter.Recentadapter
 import svg.viewer.svg.converter.reader.databinding.ActivityRecentFileBinding
-import svg.viewer.svg.converter.reader.roomDB.AppDatabase
-import svg.viewer.svg.converter.reader.roomDB.User
-import svg.viewer.svg.converter.reader.roomDB.UserDao
+import svg.viewer.svg.converter.reader.database.AppDatabase
+import svg.viewer.svg.converter.reader.database.User
+import svg.viewer.svg.converter.reader.database.UserDao
 import java.util.Locale
 
 class RecentFileActivity : AppCompatActivity() {

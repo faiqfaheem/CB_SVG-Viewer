@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.infideap.drawerbehavior.Advance3DDrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<svg.viewer.svg.converter.reader.drawer.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -9,22 +9,23 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:background="@color/white"
+        android:orientation="vertical"
         tools:context="bin.viewer.reader.bin.file.opener.app.activities.MainActivity">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/_250sdp"
-            android:background="@drawable/ic_main_back"
-            >
+            android:background="@drawable/ic_main_back">
 
 
         </RelativeLayout>
+
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/iv_Drawer"
-            android:layout_width="@dimen/_16sdp"
-            android:layout_height="@dimen/_16sdp"
+            android:layout_width="@dimen/_28sdp"
+            android:layout_height="@dimen/_28sdp"
+            android:padding="@dimen/_7sdp"
             android:layout_marginStart="@dimen/_18sdp"
             android:layout_marginTop="@dimen/_20sdp"
             android:src="@drawable/ic_drawer" />
@@ -36,7 +37,9 @@
             android:layout_marginTop="@dimen/_25sdp"
             android:layout_marginEnd="@dimen/_10sdp"
             android:src="@drawable/ic_main_svg" />
+
         <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txtv_bin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/iv_Drawer"
@@ -44,8 +47,8 @@
             android:layout_toEndOf="@id/iv_Drawer"
             android:fontFamily="@font/inter_bold"
             android:text="@string/app_main_text"
-            android:id="@+id/txtv_bin"
             android:textSize="@dimen/_25sdp" />
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -65,14 +68,13 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/layout_svgviewer"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_80sdp"
                     android:layout_weight="1"
-                    android:orientation="horizontal"
-                    android:weightSum="6"
-                    android:id="@+id/layout_svgviewer"
                     android:foreground="?selectableItemBackground"
-                    >
+                    android:orientation="horizontal"
+                    android:weightSum="6">
 
                     <androidx.appcompat.widget.AppCompatImageView
                         style="@style/imagestyle"
@@ -109,17 +111,16 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
-                    android:background="@color/secondary"
-                    />
+                    android:background="@color/secondary" />
+
                 <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/layout_svgcode"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_80sdp"
                     android:layout_weight="1"
-                    android:orientation="horizontal"
-                    android:weightSum="6"
-                    android:id="@+id/layout_svgcode"
                     android:foreground="?selectableItemBackground"
-                    >
+                    android:orientation="horizontal"
+                    android:weightSum="6">
 
                     <androidx.appcompat.widget.AppCompatImageView
                         style="@style/imagestyle"
@@ -156,19 +157,17 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
-                    android:background="@color/secondary"
-                    />
+                    android:background="@color/secondary" />
 
 
                 <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/layout_recent_files"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_80sdp"
                     android:layout_weight="1"
-                    android:orientation="horizontal"
-                    android:weightSum="6"
-                    android:id="@+id/layout_recent_files"
                     android:foreground="?selectableItemBackground"
-                    >
+                    android:orientation="horizontal"
+                    android:weightSum="6">
 
                     <androidx.appcompat.widget.AppCompatImageView
                         style="@style/imagestyle"
@@ -206,18 +205,16 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
-                    android:background="@color/secondary"
-                    />
+                    android:background="@color/secondary" />
 
                 <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/layout_converted"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_80sdp"
                     android:layout_weight="1"
-                    android:orientation="horizontal"
-                    android:weightSum="6"
-                    android:id="@+id/layout_converted"
                     android:foreground="?selectableItemBackground"
-                    >
+                    android:orientation="horizontal"
+                    android:weightSum="6">
 
                     <androidx.appcompat.widget.AppCompatImageView
                         style="@style/imagestyle"
@@ -236,8 +233,7 @@
 
                         <androidx.appcompat.widget.AppCompatTextView
                             style="@style/textviewstyle"
-                            android:text="@string/converted_files"
-                            />
+                            android:text="@string/converted_files" />
 
                         <androidx.appcompat.widget.AppCompatTextView
                             style="@style/textviewbelow"
@@ -253,11 +249,10 @@
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
 
-
-
             </androidx.appcompat.widget.LinearLayoutCompat>
         </RelativeLayout>
     </RelativeLayout>
+
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"
         android:layout_width="wrap_content"
@@ -269,4 +264,4 @@
         app:itemIconTint="@color/primary"
         app:itemTextColor="@color/black"
         app:menu="@menu/activity_main_drawer" />
-</com.infideap.drawerbehavior.Advance3DDrawerLayout>
+</svg.viewer.svg.converter.reader.drawer.DrawerLayout>
